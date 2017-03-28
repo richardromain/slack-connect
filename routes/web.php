@@ -18,3 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::get('/send-message', ['as' => 'form-slack-send-message', 'uses' => 'SlackController@formSendMessage']);
+Route::post('/send-message', ['as' => 'slack-send-message', 'uses' => 'SlackController@sendMessage']);
