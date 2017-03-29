@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Providers\SlackServiceProvider;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $slack = new SlackServiceProvider();
+        $messages = $slack->getChannelMessages('C09C27RAT', 5);
+
+        return view('home', compact('messages'));
     }
 }
