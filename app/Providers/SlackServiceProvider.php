@@ -29,6 +29,22 @@ class SlackServiceProvider extends ServiceProvider
         return $channels;
     }
 
+    public function getChannelMessages($channel, $nb_message)
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, 'https://slack.com/api/channels.history?token='.$this->token.'&channel='.$channel.'&count='.$nb_message.'&pretty=1');
+        curl_setopt($curl, CURLOPT_COOKIESESSION, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        $data = curl_exec($curl);
+        curl_close($curl);
+
+        $channels = json_decode($data);
+
+        return $channels;
+    }
+
     public function sendMessage($message, $channel, $username, $emoji)
     {
         $curl = curl_init();
